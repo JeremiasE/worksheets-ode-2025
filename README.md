@@ -7,7 +7,7 @@ Man beachte, dass Kaggle und Gradient nur funktionieren, wenn man dort eingelogg
 <table>
 <tr>
   <td>
-    <a href="/JeremiasE/worksheets-ode-2025/blob/main/examples/1-Pendulum.ipynb">Das mathematische Pendel</a>
+    <a href="examples/1-Pendulum.ipynb">Das mathematische Pendel</a>
   </td>
   <td>
     <a href="https://mybinder.org/v2/gh/JeremiasE/worksheets-ode-2025/HEAD?labpath=examples%2F1-Pendulum.ipynb" rel="nofollow">

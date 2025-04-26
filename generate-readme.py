@@ -17,7 +17,7 @@ for l in lines:
     (filename,title) = l.strip().split(",")
     s+= '<tr>\n'
     s+= '  <td>\n'
-    s+=f'    <a href="/JeremiasE/worksheets-ode-2025/blob/main/examples/{filename}">{title}</a>\n'
+    s+=f'    <a href="examples/{filename}">{title}</a>\n'
     s+= '  </td>\n'
     s+= '  <td>\n'
     s+=f'    <a href="https://mybinder.org/v2/gh/JeremiasE/worksheets-ode-2025/HEAD?labpath=examples%2F{filename}" rel="nofollow">\n'
