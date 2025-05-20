@@ -6,6 +6,8 @@ Zum interaktiven Ausführen klicken Sie einfach auf einen der vier Buttons neben
 Verwendung von Binder, die anderen Möglichkeiten sind nur nötig, wenn Binder überlastet ist.
 Man beachte, dass Kaggle und Gradient nur funktionieren, wenn man dort eingeloggt ist, da sonst das Notebook nicht auf das Internet zugreifen kann.
 
+Um die Zellen im Arbeitsblatt auszufüllen, drücken Sie "Shift-Enter". Die Zellen im Arbeitsblatt müssen von oben nach unten ausgeführt werden.
+Wollen Sie eine Zelle ändern und erneut ausführen, klicken Sie einfach in die Zelle und drücken Sie erneut "Shift-Enter".
 <table>
 <tr>
   <td>
