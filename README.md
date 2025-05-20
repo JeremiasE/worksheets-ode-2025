@@ -9,7 +9,7 @@ Man beachte, dass Kaggle und Gradient nur funktionieren, wenn man dort eingelogg
 Um die Zellen im Arbeitsblatt auszuführen, drücken Sie "Shift-Enter". Die Zellen im Arbeitsblatt müssen von oben nach unten ausgeführt werden.
 Wollen Sie eine Zelle ändern und erneut ausführen, klicken Sie einfach in die Zelle und drücken Sie erneut "Shift-Enter".
 
-Achtung: Potenzen wie $x^2$ werden in python als `x**2` geschrieben.
+Achtung: Potenzen wie x^2 werden in python als `x**2` geschrieben.
 <table>
 <tr>
   <td>
