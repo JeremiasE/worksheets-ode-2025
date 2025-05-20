@@ -2,6 +2,8 @@
 Worksheets Gewöhnliche Differentialgleichungen SS 2025
 
 ## Worksheets
+Zum interaktiven Ausführen klicken Sie einfach auf einen der vier Buttons neben dem Arbeitsblatt. Empfohlen ist die
+Verwendung von Binder, die anderen Möglichkeiten sind nur nötig, wenn Binder überlastet ist.
 Man beachte, dass Kaggle und Gradient nur funktionieren, wenn man dort eingeloggt ist, da sonst das Notebook nicht auf das Internet zugreifen kann.
 
 <table>
