@@ -6,14 +6,18 @@ import urllib.parse
 from sympy.printing.glsl import GLSLPrinter
 from sympy.core import Basic, S
 from sympy.core.function import Lambda
-from sympy.printing.codeprinter import CodePrinter
-from sympy.printing.precedence import precedence
 from sympy.plotting.plot import Line2DBaseSeries
 from sympy.plotting.plot import Plot
 from sympy import sympify, Expr, Function
 from sympy.plotting.plot import check_arguments, flat
 from sympy.external import import_module
 from matplotlib import colors
+
+from sympy.printing.codeprinter import CodePrinter
+from sympy.printing.precedence import precedence
+from sympy.core.mul import _keep_coeff
+from sympy.core import Add, Mul, Pow, S, sympify, Float
+from sympy.printing.precedence import precedence, PRECEDENCE
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -54,11 +58,73 @@ def _new_print_Pow(self, expr):
             e
         ))
 
+
+def _new_print_Mul(self, expr):
+        prec = precedence(expr)
+
+        c, e = expr.as_coeff_Mul()
+        if c < 0:
+            expr = _keep_coeff(-c, e)
+            sign = "-"
+        else:
+            sign = ""
+
+        a = []  # items in the numerator
+        b = []  # items that are in the denominator (if any)
+
+        pow_paren = []  # Will collect all pow with more than one base element and exp = -1
+
+        if self.order not in ('old', 'none'):
+            args = expr.as_ordered_factors()
+        else:
+            # use make_args in case expr was something like -x -> x
+            args = Mul.make_args(expr)
+
+        # Gather args for numerator/denominator
+        for item in args:
+            if item.is_commutative and item.is_Pow and item.exp.is_Rational and item.exp.is_negative:
+                if item.exp != -1:
+                    b.append(Pow(item.base, -item.exp, evaluate=False))
+                else:
+                    if len(item.args[0].args) != 1 and isinstance(item.base, Mul):   # To avoid situations like #14160
+                        pow_paren.append(item)
+                    b.append(Pow(item.base, -item.exp))
+            else:
+                a.append(item)
+
+        a = a or [1.0] # There is a bug here
+
+        if len(a) == 1 and sign == "-":
+            # Unary minus does not have a SymPy class, and hence there's no
+            # precedence weight associated with it, Python's unary minus has
+            # an operator precedence between multiplication and exponentiation,
+            # so we use this to compute a weight.
+            a_str = [self.parenthesize(a[0], 0.5*(PRECEDENCE["Pow"]+PRECEDENCE["Mul"]))]
+        else:
+            a_str = [self.parenthesize(x, prec) for x in a]
+        b_str = [self.parenthesize(x, prec) for x in b]
+
+        # To parenthesize Pow with exp = -1 and having more than one Symbol
+        for item in pow_paren:
+            if item.base in b:
+                b_str[b.index(item.base)] = "(%s)" % b_str[b.index(item.base)]
+
+        if not b:
+            return sign + '*'.join(a_str)
+        elif len(b) == 1:
+            return sign + '*'.join(a_str) + "/" + b_str[0]
+        else:
+            return sign + '*'.join(a_str) + "/(%s)" % '*'.join(b_str)
+
+GLSLPrinter._print_Pow = _new_print_Pow
+GLSLPrinter._print_Mul = _new_print_Mul
+
+
 GLSLPrinter._print_Pow = _new_print_Pow
 
 def to_glsl(expr,assign_to=None,**settings):
     p = GLSLPrinter(settings)
-    return str(GLSLPrinter(settings).doprint(expr,assign_to))
+    return str(p.doprint(expr,assign_to))
 
 def field_player(f,width=1300,height=700):
     code = f"""vec2 get_velocity(vec2 p) {{
