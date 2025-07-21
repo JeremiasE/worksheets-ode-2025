@@ -111,7 +111,7 @@ Achtung: Potenzen wie x^2 werden in python als x**2 geschrieben.
 </tr>
 <tr>
   <td>
-    <a href="examples/5-Eulerpath.ipynb">Eulerpfad</a>
+    <a href="examples/5-Eulerpath.ipynb">Eulersche Polygonzüge</a>
   </td>
   <td>
     <a href="https://mybinder.org/v2/gh/JeremiasE/worksheets-ode-2025/HEAD?labpath=examples%2F5-Eulerpath.ipynb" rel="nofollow">
